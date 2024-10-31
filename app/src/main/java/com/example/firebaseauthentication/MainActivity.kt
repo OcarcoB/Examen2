@@ -7,7 +7,7 @@ import com.example.firebaseauthentication.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
 
-class MainActivity : ComponentActivity() {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
@@ -20,23 +20,33 @@ class MainActivity : ComponentActivity() {
 
         auth = FirebaseAuth.getInstance()
 
-        binding = ActivityMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
-
-        binding.signIn.setOnClickListener{
+        if(auth.currentUser == null){
             startActivity(Intent(this, RegisterActivity::class.java))
             finish()
         }
-        binding.signOut.setOnClickListener{
+
+        binding = ActivityMainBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        binding.signIn.setOnClickListener {
+            startActivity(Intent(this, RegisterActivity::class.java))
+            finish()
+        }
+        binding.signOut.setOnClickListener {
             auth.signOut()
+            binding.userDetails.text = updateData()
         }
-        }
+    }
 
     override fun onResume() {
         super.onResume()
         binding.userDetails.text = updateData()
     }
 
+    private fun updateData(): String{
+        return "Email : ${auth.currentUser?.email}"
+    }
+}
     private fun updateData(): String{
         return "Email :${auth.currentUser?.email}"
     }
