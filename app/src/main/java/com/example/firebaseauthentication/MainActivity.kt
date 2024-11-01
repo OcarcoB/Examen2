@@ -2,7 +2,7 @@ package com.example.firebaseauthentication
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.ComponentActivity
+import androidx.appcompat.app.AppCompatActivity
 import com.example.firebaseauthentication.databinding.ActivityMainBinding
 import com.google.firebase.auth.FirebaseAuth
 
@@ -47,7 +47,3 @@ class MainActivity : AppCompatActivity() {
         return "Email : ${auth.currentUser?.email}"
     }
 }
-    private fun updateData(): String{
-        return "Email :${auth.currentUser?.email}"
-    }
-    }
